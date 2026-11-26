@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#1b2a4a">
+  <link rel="icon" href="data:,">
+  <title>Chem Arena - ศึกชื่อสารอินทรีย์</title>
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <div id="tags"></div>
+
+  <div id="menu" class="panel">
+    <h1>⚗️ Chem Arena</h1>
+    <p class="sub">ศึกอ่านชื่อสารอินทรีย์ออนไลน์</p>
+    <label for="nameIn">ชื่อของคุณ</label>
+    <input id="nameIn" maxlength="14" placeholder="พิมพ์ชื่อ (ไม่เกิน 14 ตัวอักษร)" autocomplete="off">
+    <div class="row"><b>ร้านแต่งตัว</b><span>🪙 <b id="coinN">0</b></span></div>
+    <div id="tabs"></div>
+    <div id="items"></div>
+    <div id="tryBar" hidden><span id="tryTxt"></span><button id="tryBuy" class="green">ซื้อ</button><button id="tryCancel" class="ghost">ยกเลิก</button></div>
+    <button id="playBtn" class="big">▶ เริ่มเกม</button>
+    <p class="note">ได้เหรียญจากการเล่น เอาไปซื้อของแต่งตัวได้</p>
+  </div>
+
+  <div id="rooms" class="panel" hidden>
+    <h2>🏠 เลือกห้อง</h2>
+    <div id="serverSel" hidden></div>
+    <div class="bar"><button id="roomNew" class="green">＋ สร้างห้อง</button><button id="roomRefresh" class="ghost" title="รีเฟรช">⟳</button><button id="roomBack" class="ghost">← กลับ</button></div>
+    <div id="newBox" hidden>
+      <input id="newName" maxlength="24" placeholder="ชื่อห้อง" autocomplete="off">
+      <input id="newPw" maxlength="20" placeholder="รหัสผ่าน (ไม่ใส่ = ห้องเปิด)" autocomplete="off">
+      <button id="newGo" class="big">สร้างและเข้าห้อง</button>
+    </div>
+    <div id="pwAsk" hidden><b id="pwAskName"></b><input id="pwIn" type="password" maxlength="20" placeholder="ใส่รหัสผ่านห้อง" autocomplete="off"><div class="bar"><button id="pwOk" class="green">เข้าห้อง</button><button id="pwCancel" class="ghost">ยกเลิก</button></div></div>
+    <div id="roomStatus"></div>
+    <div id="roomList"></div>
+    <p class="note">ผู้สร้างห้องเป็นเจ้าของห้อง เตะผู้เล่นได้ · ห้องที่ไม่มีคนจะหายไปเอง</p>
+  </div>
+
+  <div id="hud" hidden>
+    <span id="hudName"></span> &nbsp; 🪙 <b id="hudCoins">0</b> &nbsp; <button id="onlineBtn" class="ghost" title="รายชื่อผู้เล่น">👥 <b id="online">1</b></button> <button id="leaveRoom" class="ghost" title="ออกจากห้อง">🚪</button>
+    <div id="roomName" class="small"></div>
+    <div id="plist" class="panel" hidden></div>
+  </div>
+  <div id="social" hidden>
+    <div id="tools"><button id="btnChat" title="แชท (Enter)"><span>💬</span><em>แชท</em></button><button id="btnEmote" title="ท่าเต้น"><span>🕺</span><em>ท่าเต้น</em></button><button id="btnMic" title="กดค้างเพื่อพูด (หรือกดค้างปุ่ม M)"><span>🎤</span><em>กดค้างพูด</em></button><button id="btnSnd" title="เสียงเอฟเฟกต์/ลำโพง"><span>🔊</span><em>เสียง</em></button></div>
+    <div id="emotes" class="panel" hidden></div>
+    <div id="chatLog"></div>
+    <div id="chatRow" hidden>
+      <input id="chatIn" maxlength="80" placeholder="พิมพ์ข้อความ…" autocomplete="off" enterkeyhint="send">
+      <button id="chatSend">ส่ง</button>
+    </div>
+  </div>
+  <div id="hint" hidden></div>
+  <div id="touch" hidden>
+    <div id="joyZone"></div>
+    <div id="joyBase"><div id="joyKnob"></div></div>
+    <button id="btnJump" class="tbtn">⬆<br>กระโดด</button>
+  </div>
+  <div id="joinPanel" class="panel" hidden></div>
+
+  <div id="game" hidden>
+    <canvas id="mirror" width="640" height="256" hidden></canvas>
+    <div id="chip">
+      <div id="who"></div>
+      <div id="rule"></div>
+      <div id="bar"><i></i></div>
+    </div>
+    <div id="flash"></div>
+    <div id="answerRow" hidden>
+      <input id="ans" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="พิมพ์ชื่อสาร แล้วกดส่ง" enterkeyhint="send">
+      <button id="send">ส่ง</button>
+    </div>
+    <div id="fxBar" hidden></div>
+    <div id="skillBar" hidden></div>
+    <div id="targetPick" class="panel" hidden></div>
+    <div id="banner" hidden></div>
+    <button id="quitBtn" class="ghost">✕ ออกจากรอบ</button>
+    <div id="endBox" class="panel" hidden></div>
+  </div>
+
+  <div id="conn" hidden><div class="box"><div id="connMsg"></div><button id="reloadBtn" hidden>ลองใหม่</button></div></div>
+  <div id="toast"></div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;background:#1b2a4a;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+[hidden]{display:none!important}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:8px 14px;background:#4dabf7;color:#fff;font-weight:600}
+button:hover{filter:brightness(1.1)}
+button:disabled{opacity:.45;cursor:not-allowed;filter:none}
+button.big{width:100%;padding:12px;font-size:18px;background:#40c057;margin-top:10px}
+button.ghost{background:rgba(0,0,0,.4)}
+input,select{-webkit-user-select:text;user-select:text;font:inherit;font-size:16px;padding:9px 12px;border-radius:10px;border:2px solid #dee2e6;width:100%;background:#fff;color:#222}
+.panel{background:rgba(20,28,50,.88);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:18px;backdrop-filter:blur(6px)}
+#menu{position:fixed;left:20px;top:20px;bottom:20px;width:440px;max-width:calc(100% - 40px);display:flex;flex-direction:column;overflow:hidden}
+#menu h1{margin:0}.sub{margin:2px 0 8px;opacity:.8;font-size:13px}.note{opacity:.7;font-size:13px;text-align:center}
+#menu label{font-size:13px;opacity:.8}
+.row{display:flex;justify-content:space-between;margin:14px 0 8px}
+#tabs{display:flex;gap:2px;overflow-x:auto;flex:none;border-bottom:1px solid #fff2;margin-bottom:8px;scrollbar-width:none}
+#tabs::-webkit-scrollbar{display:none}
+#tabs button{flex:none;background:none;border-radius:0;padding:8px 10px;font-size:14px;color:#fff9;border-bottom:3px solid transparent;font-weight:600}
+#tabs button.on{color:#fff;border-bottom-color:#fff}
+#items{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-right:2px}
+#items.one{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-content:start}
+#items.all section{margin-bottom:14px}
+.sh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}.sh b{font-size:16px}
+.sh a{font-size:12px;background:#fff2;padding:3px 10px;border-radius:12px;cursor:pointer}
+.rowscroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.item{background:none;border:0;padding:0;text-align:left;font-size:12px;flex:0 0 96px;min-width:0;display:flex;flex-direction:column;gap:3px}
+#items.one .item{flex:none}
+.item .th{aspect-ratio:1;border-radius:12px;background:#3a4268;display:flex;align-items:center;justify-content:center;border:3px solid transparent;position:relative}
+.item.eq .th{border-color:#40c057}
+.item .ic{font-size:38px;line-height:1}.item .sw{width:58%;aspect-ratio:1;border-radius:50%;border:3px solid #fff4}
+.item b{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.item small{opacity:.75;font-size:11px}.item .pr{color:#ffe066;opacity:1}.item .eqt{color:#69db7c;opacity:1}
+#hud{position:fixed;left:14px;top:12px;background:rgba(0,0,0,.45);padding:8px 14px;border-radius:12px;font-size:16px}
+#hud .small{font-size:12px;opacity:.8;margin-top:3px}
+#hint{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.65);padding:10px 20px;border-radius:12px;font-size:17px}
+#joinPanel{position:fixed;right:20px;top:20px;width:auto;min-width:190px;padding:12px 14px}
+#joinPanel h3{margin:0 0 8px}#joinPanel ul{list-style:none;margin:0 0 10px;padding:0}
+#joinPanel li{padding:5px 0;border-bottom:1px solid #fff2}#joinPanel li.empty{opacity:.45}
+#joinPanel .btns{display:flex;gap:8px;margin-top:10px}#joinPanel .btns button{flex:1}
+#joinPanel .stand{background:#868e96}
+#tags{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.tag{position:absolute;transform:translate(-50%,-100%);white-space:nowrap;font-size:13px;font-weight:700;text-shadow:0 1px 4px #000,0 0 3px #000;text-align:center}
+.tag.table{font-size:14px;background:rgba(0,0,0,.45);padding:3px 10px;border-radius:10px}
+#game{position:fixed;left:0;right:0;top:0;height:100%;pointer-events:none}
+#game>*{pointer-events:auto}
+.pl.cur{border-color:#ffd43b}.pl.dead{opacity:.35}.pl.me{background:rgba(64,192,87,.5)}
+#bar{height:8px;background:#e9ecef;border-radius:6px;overflow:hidden;margin-top:6px}#bar i{display:block;height:100%;width:100%;background:#40c057}
+#answerRow button{background:#40c057;padding:8px 22px;width:auto}
+#endBox h2{margin:0 0 8px;font-size:30px}
+#conn{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,15,30,.75)}
+#conn .box{background:#1c2541;padding:26px 34px;border-radius:16px;text-align:center;max-width:90vw}
+#toast{z-index:60;max-width:90vw;text-align:center;position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#e8590c;padding:8px 18px;border-radius:12px;opacity:0;transition:opacity .3s;pointer-events:none}
+#toast.on{opacity:1}
+/* ---------- ปุ่มควบคุมบนจอสัมผัส ---------- */
+#touch{position:fixed;inset:0;pointer-events:none;z-index:5}
+#joyZone{position:absolute;left:0;bottom:0;width:46%;height:62%;pointer-events:auto;touch-action:none}
+#joyBase{position:fixed;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.35);transform:translate(-50%,-50%);opacity:.5;pointer-events:none;transition:opacity .15s}
+#joyBase.on{opacity:1}
+#joyKnob{position:absolute;left:50%;top:50%;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.6);transform:translate(-50%,-50%)}
+.tbtn{position:absolute;pointer-events:auto;touch-action:none;border-radius:50%;width:76px;height:76px;padding:0;line-height:1.15;font-size:14px;background:rgba(77,171,247,.8);border:2px solid rgba(255,255,255,.45);right:calc(22px + env(safe-area-inset-right))}
+#btnJump{bottom:calc(34px + env(safe-area-inset-bottom))}
+
+/* ---------- แถบเครื่องมือ + แชท ---------- */
+#tools{position:fixed;left:14px;top:84px;display:flex;gap:6px;z-index:5}
+#tools button{background:rgba(0,0,0,.5);padding:6px 11px;font-size:14px;display:flex;align-items:center;gap:5px}
+#tools button em{font-style:normal}
+#tools button.on{background:#e03131;animation:pulse 1.2s infinite}
+#tools button.off{background:rgba(120,120,120,.6)}
+@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(224,49,49,.3)}}
+#emotes{position:fixed;left:14px;top:128px;z-index:6;display:grid;grid-template-columns:repeat(4,64px);gap:8px;padding:10px}
+#emotes button{display:flex;flex-direction:column;align-items:center;gap:2px;background:#3a4268;padding:6px 2px;font-size:11px;line-height:1.2}
+#emotes button span{font-size:26px;line-height:1}
+#chatLog{position:fixed;left:14px;bottom:20px;width:min(380px,60vw);max-height:190px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:3px;pointer-events:none;z-index:4}
+#chatLog.open{bottom:72px}
+#chatLog div{background:rgba(0,0,0,.45);padding:3px 9px;border-radius:9px;font-size:14px;word-break:break-word;transition:opacity .6s;-webkit-user-select:text;user-select:text}
+#chatLog div.old{opacity:0}#chatLog.open div.old{opacity:1}
+#chatLog b{color:#8ce99a;margin-right:6px}#chatLog b.me{color:#74c0fc}
+#chatRow{position:fixed;left:14px;bottom:20px;width:min(380px,92vw);display:flex;gap:6px;z-index:6}
+#chatRow input{flex:1;min-width:0}
+.tag.bubble{background:#fff;color:#222;text-shadow:none;font-weight:600;font-size:14px;padding:5px 11px;border-radius:14px;white-space:normal;max-width:210px;box-shadow:0 2px 8px #0005}
+.tag.speaking{color:#b2f2bb;text-shadow:0 0 8px #40c057,0 1px 4px #000}
+.tag.speaking::before{content:'🔊 '}
+
+/* ---------- รอบมินิเกม ---------- */
+#joinPanel{z-index:5}
+#joinPanel .qn{margin-top:6px;opacity:.9}#joinPanel .names{font-size:13px;opacity:.75;min-height:18px;margin-bottom:4px}
+.tag.pad{font-size:16px;font-weight:800;white-space:pre-line;background:#fff;color:#1c2a4a;border:4px solid #fff;border-radius:14px;padding:4px 10px;text-shadow:none;max-width:180px;box-shadow:0 3px 10px #0006;line-height:1.25}
+.tag.pad svg{display:block;width:var(--sw,104px);height:auto}
+.tag.pad.good{background:#d3f9d8;color:#0b5d1e}.tag.pad.bad{background:#ffe3e3;color:#8f1d1d;text-decoration:line-through;opacity:.7}
+.tag.pad.hid{background:#364fc7;color:#fff;border-color:#fff}
+.tag.pad.sm{font-size:12px;max-width:140px;padding:3px 7px;border-width:3px}
+#game{position:fixed;left:0;right:0;top:0;height:100%;pointer-events:none;z-index:4}
+#game>*{pointer-events:auto}
+#chip{position:absolute;top:12px;left:50%;transform:translateX(-50%);background:rgba(20,28,50,.82);border:1px solid #fff3;border-radius:14px;padding:7px 16px 6px;min-width:min(420px,70vw);max-width:min(620px,92vw);text-align:center;box-shadow:0 4px 18px #0006;backdrop-filter:blur(6px)}
+#who{font-weight:800;font-size:16px}
+#rule{display:none;font-size:13px;color:#a5d8ff;margin-top:3px;line-height:1.3}
+#bar{height:7px;background:#ffffff30;border-radius:6px;overflow:hidden;margin-top:6px}#bar i{display:block;height:100%;width:100%;background:#40c057}
+#flash{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);font-size:min(22vw,150px);font-weight:900;color:#ffe066;text-shadow:0 6px 0 #e8590c,0 0 30px #000a;pointer-events:none;white-space:nowrap;opacity:0;text-align:center}
+#flash.go{animation:pop .9s ease-out}
+#flash small{display:block;font-size:.28em;color:#fff;text-shadow:0 2px 8px #000}
+@keyframes pop{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}20%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}70%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.3)}}
+#answerRow{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:8px;width:min(560px,94vw)}
+#answerRow button{background:#40c057;padding:8px 22px;width:auto}
+#banner{position:absolute;bottom:12%;left:50%;transform:translateX(-50%);padding:10px 22px;border-radius:16px;font-size:22px;font-weight:700;text-align:center;max-width:92vw;box-shadow:0 8px 30px #0008}
+#banner.ok{background:#2f9e44}#banner.bad{background:#c92a2a}#banner small{display:block;font-size:15px;font-weight:500;margin-top:4px}
+#quitBtn{position:absolute;top:12px;right:14px;padding:6px 12px;font-size:14px}
+#endBox{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;min-width:300px}
+#endBox h2{margin:0 0 8px;font-size:30px}
+body.round #hud .small{display:none}
+
+/* จอกว้าง: ข้อมูลโจทย์อยู่บนจอมอนิเตอร์ใน 3D แล้ว — ชิปสถานะย้ายลงล่าง ไม่บังฉาก */
+@media (min-width:721px){#chip{top:auto;bottom:14px;min-width:0;width:min(420px,56vw)}#answerRow{bottom:70px}#banner{bottom:18%}}
+/* ---------- จอเล็ก (มือถือแนวตั้ง) ---------- */
+@media (max-width:720px){
+  #menu{left:0;right:0;top:auto;bottom:0;width:100%;max-width:none;max-height:62vh;border-radius:18px 18px 0 0;padding:14px 14px calc(14px + env(safe-area-inset-bottom))}
+  #menu h1{font-size:22px}.sub{margin:0 0 8px}.row{margin:10px 0 6px}
+  #items.one{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden}#items.one .item{flex:0 0 78px}.item .ic{font-size:30px}
+  #items{flex:none;max-height:34vh}#items.all .item{flex:0 0 78px}
+  #menu .note{display:none}
+  button.big{padding:10px;font-size:17px;margin-top:8px}
+  #hud{left:8px;top:calc(8px + env(safe-area-inset-top));padding:6px 10px;font-size:14px;max-width:calc(100% - 16px)}
+  #tools{left:8px;top:calc(50px + env(safe-area-inset-top))}
+  #tools button{padding:6px 10px}#tools button em{display:none}
+  #emotes{left:8px;top:calc(94px + env(safe-area-inset-top))}
+  #joinPanel{left:auto;right:8px;top:calc(50px + env(safe-area-inset-top));bottom:auto;width:200px;padding:8px 10px;font-size:12px}
+  #joinPanel h3{font-size:14px;margin:0 0 4px}#joinPanel .note,#joinPanel .names{display:none}#joinPanel button{padding:6px 8px;font-size:13px}
+  body.round #joinPanel{top:auto;bottom:calc(130px + env(safe-area-inset-bottom))}
+  #chatLog{left:8px;bottom:calc(200px + env(safe-area-inset-bottom));width:62vw}
+  #chatLog.open{bottom:calc(66px + env(safe-area-inset-bottom))}
+  #chatRow{left:0;right:0;bottom:0;width:auto;padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:rgba(20,28,50,.95)}
+  #chip{top:calc(94px + env(safe-area-inset-top));width:calc(100% - 16px);max-width:none}
+  #rule{display:block}
+  #quitBtn{top:calc(8px + env(safe-area-inset-top));right:8px;font-size:13px}
+    .tag.pad{padding:1px 4px;border-width:2px;border-radius:9px}
+  #banner{font-size:19px;padding:10px 16px;bottom:170px}#banner small{font-size:14px}
+  #answerRow{bottom:calc(10px + env(safe-area-inset-bottom));width:calc(100% - 20px)}
+  #endBox{min-width:0;width:calc(100% - 32px)}
+}
+/* ---------- มือถือแนวนอน / จอเตี้ย: ย่อ UI ให้เห็นฉากเต็มที่ ---------- */
+@media (max-height:520px) and (min-width:721px){
+  #menu{top:8px;bottom:8px;left:8px;width:300px;padding:12px}
+  #menu h1{font-size:20px}.sub{margin:0 0 6px}.row{margin:8px 0 4px}
+  .sub,#menu .note{display:none}#menu label{display:none}#menu input{padding:6px 10px}
+  #items.one{display:flex;gap:6px;overflow-x:auto;overflow-y:hidden}#items.one .item{flex:0 0 66px}.item{flex-basis:66px}.item .ic{font-size:24px}
+  #tabs button{padding:5px 8px}
+  button.big{padding:8px;margin-top:6px;position:sticky;bottom:0}
+  #hud{left:calc(8px + env(safe-area-inset-left));top:6px;padding:3px 9px;font-size:12px;border-radius:9px}#hud .small{display:none}
+  #tools{left:calc(8px + env(safe-area-inset-left));top:34px;gap:4px}
+  #tools button{padding:4px 8px;font-size:13px;border-radius:8px}#tools button em{display:none}
+  #emotes{left:calc(8px + env(safe-area-inset-left));top:68px;grid-template-columns:repeat(7,50px);gap:5px;padding:6px}
+  #emotes button{font-size:9px;padding:3px 0}#emotes button span{font-size:20px}
+  #chatLog{left:calc(8px + env(safe-area-inset-left));top:68px;bottom:auto;width:34vw;max-height:84px;justify-content:flex-start;font-size:12px}
+  #chatLog div{font-size:12px;padding:2px 7px}
+  #chatLog.open{top:68px;bottom:auto}
+  #chatRow{left:calc(8px + env(safe-area-inset-left));bottom:8px;width:min(380px,60vw)}
+  #chatRow input{padding:6px 10px}
+  #joinPanel{top:6px;right:calc(8px + env(safe-area-inset-right));width:190px;padding:7px 9px;font-size:12px;border-radius:12px}
+  #joinPanel h3{font-size:13px;margin:0 0 3px}#joinPanel .note,#joinPanel .names,#joinPanel .qn{display:none}#joinPanel button{padding:5px 8px;font-size:13px}
+  body.round #joinPanel{top:44px}
+  #chip{top:auto;bottom:6px;padding:3px 12px 3px;min-width:0;width:min(360px,46vw);border-radius:10px}
+  #who{font-size:13px}#bar{height:5px;margin-top:3px}
+  #answerRow{bottom:38px;width:min(480px,56vw)}#answerRow input{padding:6px 10px}
+  #quitBtn{top:6px;right:calc(8px + env(safe-area-inset-right));padding:4px 9px;font-size:12px}
+    body.round #quitBtn~#endBox{top:50%}
+  #banner{font-size:16px;padding:6px 14px;bottom:96px}#banner small{font-size:12px}
+  #endBox{padding:10px 16px}#endBox h2{font-size:22px;margin-bottom:4px}
+  .tag.pad{padding:1px 4px;border-width:2px;border-radius:9px}
+  #rule{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:11px;margin-top:1px}
+  .tbtn{width:60px;height:60px;font-size:11px}#btnJump{bottom:16px}
+  #flash{top:42%;font-size:min(18vh,110px)}
+}
+
+#endBox .rank{text-align:left;margin:6px 0 10px;font-size:16px;line-height:1.5}
+
+#btnMic{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+
+/* แผงเข้าร่วมแบบสั้น: บรรทัดสถานะเดียว + ปุ่มใหญ่ */
+#joinPanel .st{font-size:14px;opacity:.9;margin-bottom:8px;text-align:center}
+#joinPanel .btns{margin-top:0}
+#joinPanel .btns button{padding:10px 14px;font-size:16px}
+#joinPanel .btns #watchBtn{flex:0 0 auto;font-size:14px}
+body.watchoff #game{display:none}
+body.round.watchoff #joinPanel{top:20px}
+@media (max-width:720px){#joinPanel{min-width:0;width:auto;padding:8px 10px}#joinPanel .st{font-size:12px;margin-bottom:5px}#joinPanel .btns button{padding:7px 10px;font-size:14px}body.round #joinPanel{top:calc(50px + env(safe-area-inset-top));bottom:auto}}
+@media (max-height:520px) and (min-width:721px){#joinPanel{top:6px;width:auto;min-width:0;padding:6px 8px}#joinPanel .st{font-size:11px;margin-bottom:4px}#joinPanel .btns button{padding:6px 10px;font-size:13px}}
+
+/* โหมดห้องลองเสื้อ (เปิดจากจุดเปลี่ยนชุดในห้องรอ) */
+#menu.wardrobe .sub,#menu.wardrobe label,#menu.wardrobe #nameIn,#menu.wardrobe .note{display:none}
+
+#emotes button.vip{background:linear-gradient(135deg,#f59f00,#e8590c)}
+@media (max-height:520px) and (min-width:721px){#emotes{grid-template-columns:repeat(5,52px)}}
+
+/* ---- หน้าเลือกห้อง / รายชื่อผู้เล่น ---- */
+button.green{background:#40c057}
+#rooms{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:520px;max-width:calc(100% - 24px);max-height:calc(100% - 24px);display:flex;flex-direction:column;gap:8px;overflow:hidden;z-index:6}
+#rooms h2{margin:0}
+#rooms .bar{display:flex;gap:8px}#rooms .bar .green{flex:1}
+#newBox,#pwAsk{display:flex;flex-direction:column;gap:8px;background:#0003;padding:10px;border-radius:12px}
+#newBox[hidden],#pwAsk[hidden]{display:none}
+#roomStatus{font-size:13px;opacity:.85;min-height:16px}#roomStatus.bad{color:#ffa8a8;opacity:1}
+#roomList{overflow-y:auto;display:flex;flex-direction:column;gap:8px;min-height:80px;flex:1}
+#roomList .room{display:flex;flex-direction:column;align-items:flex-start;gap:2px;background:rgba(255,255,255,.08);padding:10px 14px;text-align:left;width:100%}
+#roomList .room:hover{background:rgba(77,171,247,.35)}
+#roomList .rn{font-size:17px}#roomList .rm{font-size:13px;opacity:.8;font-weight:400}
+#roomList .empty{opacity:.7;text-align:center;font-size:14px}
+#hud button{padding:3px 9px;font-size:14px}
+#hud{z-index:4}
+#plist{position:absolute;left:0;top:100%;margin-top:6px;min-width:220px;max-height:50vh;overflow:auto;padding:8px 10px;font-size:14px;z-index:7}
+#plist[hidden]{display:none}
+#plist .pr{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px solid #fff2}
+#plist .pr button{padding:2px 8px;background:#e03131;font-size:13px}
+#serverSel{display:flex;gap:6px}#serverSel[hidden]{display:none}
+#serverSel button{flex:1;background:rgba(255,255,255,.1);font-size:14px;padding:6px 8px}#serverSel button.on{background:#4dabf7}
+/* กันหน้าเว็บถูกซูมด้วยนิ้ว/ดับเบิลแตะบนมือถือ (ซูมกล้องในเกมยังใช้ได้ผ่านโค้ดเกมเอง) */
+html,body{touch-action:none}
+#menu,#items,#roomList,#plist,#endBox,#emotes,#chatLog,#tabs,#joinPanel{touch-action:pan-x pan-y}
+input{touch-action:manipulation}
+
+/* =====================================================================
+   ธีม Roblox minimal: พื้นเทาเข้มโปร่ง มุมโค้งเล็ก ปุ่มแบน ไม่มีเงา/ไล่สี ตัวหนังสือขาวหนา
+   สีหลัก: เขียว #00b06f (ปุ่มหลัก) · เทา #393b3d (ปุ่มรอง) · แดง #e8403b
+   ===================================================================== */
+:root{--bg:rgba(35,37,39,.92);--bg2:#2b2d2f;--btn:#393b3d;--btnh:#4a4d50;--line:rgba(255,255,255,.1);--green:#00b06f;--red:#e8403b;--blue:#335fff;--r:8px}
+html,body{font-family:"Builder Sans","Source Sans 3","Segoe UI",system-ui,-apple-system,"Noto Sans Thai","Sukhumvit Set",Tahoma,sans-serif;background:#232527}
+button{background:var(--btn);color:#fff;border-radius:var(--r);font-weight:700;padding:8px 14px;transition:background .12s}
+button:hover{filter:none;background:var(--btnh)}
+button:active{transform:scale(.97)}
+button.big,button.green,#queueBtn,#answerRow button,#pwOk,#newGo{background:var(--green);color:#fff}
+button.big:hover,button.green:hover,#queueBtn:hover,#answerRow button:hover,#pwOk:hover,#newGo:hover{background:#00c97d}
+button.ghost{background:var(--btn)}
+button.ghost:hover{background:var(--btnh)}
+#joinPanel .stand{background:var(--btn)}
+.panel{background:var(--bg);border:0;border-radius:var(--r);backdrop-filter:none;box-shadow:none}
+input,select{background:#191a1c;color:#fff;border:1px solid #4a4d50;border-radius:var(--r);padding:9px 12px}
+input:focus{outline:0;border-color:#fff}
+input::placeholder{color:#8d9196}
+#menu h1,#rooms h2{font-size:22px;font-weight:800;letter-spacing:-.2px}
+.sub,.note,#menu label{opacity:.6}
+#tabs{border-bottom:1px solid var(--line)}
+#tabs button{background:none;color:#fff9;border-radius:0}
+#tabs button:hover{background:none;color:#fff}
+.item .th{background:var(--bg2);border-radius:var(--r);border:2px solid transparent}
+.item:hover .th{background:var(--btn)}
+.item.eq .th{border-color:#fff}
+.item .sw{border:2px solid #fff3}
+.item .pr{color:#fff}.item .eqt{color:var(--green)}
+.sh a{background:var(--btn);border-radius:var(--r)}
+#hud{background:var(--bg);border-radius:var(--r);padding:7px 12px;font-size:15px;font-weight:700}
+#hud button{padding:3px 8px}
+#tools button{background:var(--bg);border-radius:var(--r);padding:7px 11px}
+#tools button:hover{background:var(--btnh)}
+#tools button.on{background:var(--red);animation:none}
+#tools button.off{background:var(--bg);opacity:.55}
+#emotes{background:var(--bg)}
+#emotes button{background:var(--btn);border-radius:var(--r)}
+#emotes button:hover{background:var(--btnh)}
+#emotes button.vip{background:#6d5200;box-shadow:inset 0 0 0 1px #ffd43b}
+#chatLog div{background:rgba(35,37,39,.78);border-radius:var(--r);padding:3px 9px}
+#chatLog b{color:#fff;opacity:.7}#chatLog b.me{color:#7fa3ff;opacity:1}
+#chatRow{background:none}
+.tag{font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.9)}
+.tag.bubble{border-radius:var(--r);box-shadow:none;border:0}
+.tag.speaking{color:#fff;text-shadow:0 1px 3px #000}.tag.speaking::before{content:'🔊 '}
+.tag.pad{background:#fff;color:#232527;border:0;border-radius:var(--r);box-shadow:0 2px 6px rgba(0,0,0,.35);padding:5px 10px}
+.tag.pad.good{background:#c8f7df;color:#00643f}.tag.pad.bad{background:#ffd9d7;color:#8e1a16}
+.tag.pad.hid{background:#335fff;color:#fff}
+.tag.table{background:var(--bg);border-radius:var(--r)}
+#toast{background:var(--bg);border-radius:var(--r);font-weight:700;box-shadow:none}
+#chip{background:var(--bg);border:0;border-radius:var(--r);box-shadow:none;backdrop-filter:none}
+#who{font-weight:700}
+#rule{color:#c4c8cc}
+#bar{height:4px;background:#ffffff26;border-radius:2px}#bar i{background:var(--green)}
+#flash{color:#fff;font-weight:800;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+#flash small{text-shadow:0 1px 6px #000}
+#banner{border-radius:var(--r);box-shadow:none}
+#banner.ok{background:var(--green)}#banner.bad{background:var(--red)}
+#endBox{border-radius:var(--r)}
+#conn{background:rgba(25,26,28,.88)}#conn .box{background:var(--bg);border-radius:var(--r)}
+#joinPanel{border-radius:var(--r)}
+#joinPanel .btns{flex-wrap:nowrap}
+#roomList .room{background:var(--bg2);border-radius:var(--r)}
+#roomList .room:hover{background:var(--btn)}
+#newBox,#pwAsk{background:var(--bg2);border-radius:var(--r)}
+#serverSel button{background:var(--btn)}#serverSel button.on{background:#fff;color:#232527}
+#plist{background:var(--bg)}#plist .pr button{background:var(--red)}
+#roomStatus.bad{color:#ff8a86}
+.tbtn{background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.5)}
+#joyBase{background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.3)}
+/* จอถ่ายทอดจอมอนิเตอร์ (กล้องปกติไม่ต้องหันไปหาจอใหญ่) */
+#mirror{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:min(440px,44vw);height:auto;aspect-ratio:5/2;border-radius:var(--r);background:#0b1020;pointer-events:none;box-shadow:0 0 0 2px rgba(255,255,255,.12)}
+#mirror[hidden]{display:none}
+@media (max-width:720px){#mirror{top:calc(54px + env(safe-area-inset-top));width:min(62vw,340px);height:auto}#chip{top:calc(54px + env(safe-area-inset-top) + min(62vw,340px)*0.4 + 8px)}}
+@media (max-height:520px) and (min-width:721px){#mirror{top:6px;width:min(300px,34vw);height:auto}}
+
+/* ---------- สกิล ---------- */
+#items.skills{display:flex;flex-direction:column;gap:8px}
+.skhint{margin:0 0 4px;font-size:12px;opacity:.65;line-height:1.35}
+.sk{display:flex;align-items:center;gap:10px;background:var(--bg2);border-radius:var(--r);padding:8px 10px}
+.sk.atk{box-shadow:inset 3px 0 0 var(--red)}
+.sk .ski{font-size:30px;width:42px;text-align:center;flex:none}
+.sk .skt{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.sk .skt b{font-size:15px}.sk .skt small{font-size:12px;opacity:.7;line-height:1.3}.sk .skinfo{opacity:1!important;color:#c4c8cc}
+.pips{display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle}.pips i{width:9px;height:9px;border-radius:2px;background:#ffffff30}.pips i.on{background:var(--green)}
+.skbuy{flex:none;background:var(--green);padding:7px 10px;font-size:13px;white-space:nowrap}
+.skbuy.no{background:var(--btn);opacity:.6}.skbuy.max{background:var(--btn);opacity:.8}
+#skillBar{position:absolute;right:14px;bottom:14px;display:flex;gap:6px;z-index:5}
+#skillBar button{position:relative;display:flex;flex-direction:column;align-items:center;gap:0;min-width:58px;padding:6px 6px 5px;background:var(--bg)}
+#skillBar button span{font-size:22px;line-height:1.1}#skillBar button em{font-style:normal;font-size:11px;opacity:.85}
+#skillBar button b{position:absolute;top:-6px;right:-6px;background:#fff;color:#232527;border-radius:10px;min-width:18px;height:18px;font-size:12px;line-height:18px;text-align:center}
+#skillBar button kbd{position:absolute;left:3px;top:2px;font:600 9px system-ui;opacity:.5}
+#skillBar button.atk{box-shadow:inset 0 -2px 0 var(--red)}
+#skillBar button:disabled{opacity:.35}
+#fxBar{position:absolute;left:50%;bottom:88px;transform:translateX(-50%);background:var(--bg);padding:5px 14px;border-radius:var(--r);font-weight:700;font-size:14px;white-space:nowrap;pointer-events:none!important}
+#targetPick{position:absolute;right:14px;bottom:86px;display:flex;flex-direction:column;gap:6px;min-width:170px;max-height:50vh;overflow:auto;z-index:7}
+#targetPick .tt{font-weight:700;font-size:14px;margin-bottom:2px}
+.tag.pad.struck{opacity:.3;text-decoration:line-through}
+@media (max-width:720px){#skillBar{right:8px;bottom:calc(120px + env(safe-area-inset-bottom));flex-direction:column}#skillBar button{flex-direction:row;gap:6px;min-width:0;padding:5px 9px}#skillBar button em,#skillBar button kbd{display:none}#fxBar{bottom:calc(170px + env(safe-area-inset-bottom));font-size:12px}#targetPick{right:70px;bottom:calc(120px + env(safe-area-inset-bottom))}}
+@media (max-height:520px) and (min-width:721px){#skillBar{bottom:6px;right:calc(100px + env(safe-area-inset-right))}#skillBar button{min-width:44px;padding:3px 5px}#skillBar button em,#skillBar button kbd{display:none}#fxBar{bottom:44px;font-size:12px}#targetPick{bottom:60px;right:calc(100px + env(safe-area-inset-right))}}
+
+/* ลองใส่ก่อนซื้อ */
+#tryBar{display:flex;align-items:center;gap:8px;background:var(--bg2);border-radius:var(--r);padding:8px 10px;margin-top:8px;flex:none}
+#tryBar[hidden]{display:none}
+#tryTxt{flex:1;min-width:0;font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#tryBar button{padding:7px 12px;font-size:13px;flex:none}#tryBuy.no{background:var(--btn);opacity:.7}
+.item.try .th{border:2px dashed #fff}

@@ -1,0 +1,9 @@
+# Blueprint สำหรับ deploy เซิร์ฟเวอร์เกมบน Render (render.com)
+services:
+  - type: web
+    name: chem-arena-server
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
